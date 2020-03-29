@@ -8,40 +8,17 @@ const instance = axios.create({
   timeout: 1000
 });
 
-export default {
-
-  async execute(method, resource, data, config) {
-    let accessToken = await Vue.prototype.$auth.getAccessToken()
-    return instance({
-      method:method,
-      url: resource,
-      data,
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
-      ...config
-    })
-  },
-
-  // (C)reate
-  createNew(text, completed) {
-    return this.execute('POST', 'todos', {title: text, completed: completed})
-  },
-  // (R)ead
-  getAll() {
-    return this.execute('GET','todos', null, {
-      transformResponse: [function (data) {
-        return data? JSON.parse(data)._embedded.todos : data;
-      }]
-    })
-  },
-  // (U)pdate
-  updateForId(id, text, completed) {
-    return this.execute('PUT', 'todos/' + id, { title: text, completed: completed })
-  },
-
-  // (D)elete
-  removeForId(id) {
-    return this.execute('DELETE', 'todos/'+id)
-  }
+export default {  
+  // (C)reate  
+  createNew: (text, completed) => instance.post('todos', {title: text, completed: completed}),  
+  // (R)ead  
+  getAll: () => instance.get('todos', {  
+    transformResponse: [function (data) {  
+      return data? JSON.parse(data)._embedded.todos : data;  
+    }]  
+  }),  
+  // (U)pdate  
+  updateForId: (id, text, completed) => instance.put('todos/'+id, {title: text, completed: completed}),  
+  // (D)elete  
+  removeForId: (id) => instance.delete('todos/'+id)  
 }
