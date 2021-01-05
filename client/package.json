@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@okta/okta-vue": "1.0.7",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "vue": "^2.5.17",
     "vuejs-logger": "^1.5.3"
   },
